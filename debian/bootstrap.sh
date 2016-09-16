@@ -24,7 +24,7 @@ APT_GET_INSTALL="$APT_GET -qy --no-install-recommends install"
 # REBOOT to boot into the new kernel
 
 # update to sid
-grep -e sid /etc/debian_version || (
+grep -e sid /etc/apt/sources.list || (
     echo "deb http://mirrors.kernel.org/debian/ sid main contrib non-free" | sudo tee /etc/apt/sources.list
     $APT_GET update
     $APT_GET -qy upgrade
@@ -37,14 +37,14 @@ grep -e sid /etc/debian_version || (
 $APT_GET -qy autoremove gdm3
 $APT_GET -qy autoremove --purge 'gnome*'
 
-$APT_GET_INSTALL git curl awesome awesome-extra suckless-tools slim \
-                 scrot vim-gtk sakura ack-grep vagrant mpv unp \
-                 nfs-kernel-server nfs-common arandr evince geeqie \
-                 feh nodejs npm gparted htop aspell-en aspell-es \
-                 i3lock zfsutils-linux zfs-dkms unp redshift \
-                 weechat weechat-scripts weechat-plugins \
-                 virtualenv virtualenvwrapper autojump zsh \
-                 ruby pry ipython nodejs npm
+$APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump awesome \
+                 awesome-extra curl emacs24 evince feh geeqie git gparted \
+                 htop i3lock ipython mpv nfs-common nfs-kernel-server nodejs \
+                 npm pry redshift ruby sakura scrot slim suckless-tools unp \
+                 vagrant vim-gtk virtualenv virtualenvwrapper weechat \
+                 weechat-plugins weechat-scripts zfs-dkms zfsutils-linux zsh
+
+sudo ln -s /usr/bin/nodejs /usr/local/bin/node
 
 # Fetch dotfiles
 curl -s https://raw.githubusercontent.com/omab/dotfiles/master/.bin/dotfiles-bootstrap | bash -
