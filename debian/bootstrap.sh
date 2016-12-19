@@ -90,11 +90,9 @@ EOF
 
 # install crontab rules
 
-crontab -e <<EOF
-@reboot emacs --daemon=org
-@reboot emacs --daemon=psa
-@reboot emacs --daemon=wrk
-EOF
+for name in "org psa work default"; do
+    (crontab -l; echo "@reboot emacs --daemon=$name") | crontab -
+done
 
 # install chrome / virtualbox
 
