@@ -88,6 +88,14 @@ EOF
   sed -i 's/#LidSwitchIgnoreInhibited=.*/LidSwitchIgnoreInhibited=no/' /etc/systemd/logind.conf
 )
 
+# install crontab rules
+
+crontab -e <<EOF
+@reboot emacs --daemon=org
+@reboot emacs --daemon=psa
+@reboot emacs --daemon=wrk
+EOF
+
 # install chrome / virtualbox
 
 echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
