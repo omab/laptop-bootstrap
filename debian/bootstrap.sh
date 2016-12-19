@@ -42,7 +42,8 @@ $APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump awesome \
                  htop i3lock ipython mpv nfs-common nfs-kernel-server nodejs \
                  npm pry redshift ruby sakura scrot slim suckless-tools unp \
                  vagrant vim-gtk virtualenv virtualenvwrapper weechat \
-                 weechat-plugins weechat-scripts zfs-dkms zfsutils-linux zsh
+                 weechat-plugins weechat-scripts zfs-dkms zfsutils-linux zsh \
+                 silversearcher-ag
 
 sudo ln -s /usr/bin/nodejs /usr/local/bin/node
 
