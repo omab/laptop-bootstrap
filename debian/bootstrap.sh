@@ -37,13 +37,15 @@ grep -e sid /etc/apt/sources.list || (
 $APT_GET -qy autoremove gdm3
 $APT_GET -qy autoremove --purge 'gnome*'
 
-$APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump awesome \
-                 awesome-extra curl emacs24 evince feh geeqie git gparted \
-                 htop i3lock ipython mpv nfs-common nfs-kernel-server nodejs \
-                 npm pry redshift ruby sakura scrot slim suckless-tools unp \
-                 vagrant vim-gtk virtualenv virtualenvwrapper weechat \
-                 weechat-plugins weechat-scripts zfs-dkms zfsutils-linux zsh \
-                 silversearcher-ag rofi
+$APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump curl emacs25 \
+                 evince feh geeqie git gparted htop i3 i3lock ipython mpv \
+                 nfs-common nfs-kernel-server nodejs npm pry redshift ruby \
+                 rxvt-unicode scrot slim suckless-tools unp vagrant vim-gtk \
+                 virtualenv virtualenvwrapper weechat weechat-plugins \
+                 weechat-scripts zfs-dkms zfsutils-linux zsh silversearcher-ag \
+                 rofi
+
+# $APT_GET_INSTALL awesome awesome-extra sakura
 
 sudo ln -s /usr/bin/nodejs /usr/local/bin/node
 
