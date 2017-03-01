@@ -43,7 +43,8 @@ $APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump curl emacs25 \
                  rxvt-unicode scrot slim suckless-tools unp vagrant vim-gtk \
                  virtualenv virtualenvwrapper weechat weechat-plugins \
                  weechat-scripts zfs-dkms zfsutils-linux zsh silversearcher-ag \
-                 rofi fonts-font-awesome dunst
+                 rofi fonts-font-awesome dunst apt-transport-https \
+                 ca-certificates software-properties-common
 
 # $APT_GET_INSTALL awesome awesome-extra sakura
 
@@ -96,7 +97,7 @@ for name in "org psa work default"; do
     (crontab -l; echo "@reboot emacs --daemon=$name") | crontab -
 done
 
-# install chrome / virtualbox
+# install chrome / virtualbox / docker
 
 echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
 wget -q https://dl.google.com/linux/linux_signing_key.pub -O- | sudo apt-key add -
@@ -105,27 +106,11 @@ echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sud
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
 
-$APT_GET update
-$APT_GET_INSTALL --allow-unauthenticated google-chrome-stable virtualbox virtualbox-ext-pack
-sudo ln -sf /usr/bin/google-chrome /usr/local/bin/chrome
-
-# gems / pip / etc packages
-
-sudo gem install rubocop
-sudo npm install -g eslint babel-eslint eslint-plugin-react
-$APT_GET_INSTALL python-flake8 pylint pylint3
-
-# install chrome / virtualbox
-
-echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-wget -q https://dl.google.com/linux/linux_signing_key.pub -O- | sudo apt-key add -
-
-echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
-wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
-wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb https://apt.dockerproject.org/repo/ debian-$(lsb_release -cs) main"
+wget -q https://apt.dockerproject.org/gpg -O- | sudo apt-key add -
 
 $APT_GET update
-$APT_GET_INSTALL --allow-unauthenticated google-chrome-stable virtualbox virtualbox-ext-pack
+$APT_GET_INSTALL --allow-unauthenticated google-chrome-stable virtualbox virtualbox-ext-pack docker-engine
 sudo ln -sf /usr/bin/google-chrome /usr/local/bin/chrome
 
 # gems / pip / etc packages
