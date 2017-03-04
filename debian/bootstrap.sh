@@ -44,7 +44,7 @@ $APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump curl emacs25 \
                  virtualenv virtualenvwrapper weechat weechat-plugins \
                  weechat-scripts zfs-dkms zfsutils-linux zsh silversearcher-ag \
                  rofi fonts-font-awesome dunst apt-transport-https \
-                 ca-certificates software-properties-common
+                 ca-certificates software-properties-common imagemagick
 
 # $APT_GET_INSTALL awesome awesome-extra sakura
 
@@ -76,7 +76,7 @@ Before=sleep.target
 User=omab
 Type=forking
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/i3lock -c 333333
+ExecStart=/home/omab/.bin/i3-lock-fancy.sh
 
 [Install]
 WantedBy=sleep.target
