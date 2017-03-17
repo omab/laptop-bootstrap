@@ -45,7 +45,7 @@ $APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump curl emacs25 \
                  weechat-scripts zfs-dkms zfsutils-linux zsh silversearcher-ag \
                  rofi fonts-font-awesome dunst apt-transport-https \
                  ca-certificates software-properties-common imagemagick unzip \
-                 xbacklight
+                 xbacklight xclip
 
 # $APT_GET_INSTALL awesome awesome-extra sakura
 
