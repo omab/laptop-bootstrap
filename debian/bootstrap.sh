@@ -99,6 +99,13 @@ ATTRS{idVendor}=="1532", ATTRS{idProduct}=="011c", ACTION=="add", ENV{HOME}="/ho
 EOF
 )
 
+# Configure external monitor event handler
+[[ -d /etc/udev/rules.d ]] && (
+cat <<EOF | sudo tee /etc/udev/rules.d/90-hdmi-plug.rules
+SUBSYSTEM=="drm", ACTION=="change", ENV{HOME}="/home/omab", ENV{XAUTHORITY}="/home/omab/.Xauthority", ENV{DISPLAY}=":0.0", ENV{HDMI_SLEEP}="5" RUN+="/home/omab/.bin/screen-check.sh"
+EOF
+)
+
 # install crontab rules
 
 for name in "org psa work default"; do
