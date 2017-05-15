@@ -92,6 +92,13 @@ EOF
   sed -i 's/#LidSwitchIgnoreInhibited=.*/LidSwitchIgnoreInhibited=no/' /etc/systemd/logind.conf
 )
 
+# Configure external keyboard event handler
+[[ -d /etc/udev/rules.d ]] && (
+cat <<EOF | sudo tee /etc/udev/rules.d/80-razer-keyboard.rules
+ATTRS{idVendor}=="1532", ATTRS{idProduct}=="011c", ACTION=="add", ENV{HOME}="/home/omab", ENV{XAUTHORITY}="/home/omab/.Xauthority", ENV{DISPLAY}=":0.0", RUN+="/home/omab/.bin/fix-keyboard"
+EOF
+)
+
 # install crontab rules
 
 for name in "org psa work default"; do
