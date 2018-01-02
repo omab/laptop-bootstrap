@@ -40,7 +40,7 @@ $APT_GET -qy autoremove --purge 'gnome*'
 $APT_GET_INSTALL ack-grep arandr aspell-en aspell-es autojump curl emacs25 \
                  evince feh geeqie git gparted htop i3 i3lock i3blocks ipython \
                  mpv nfs-common nfs-kernel-server nodejs npm pry redshift ruby \
-                 rxvt-unicode scrot slim suckless-tools unp vagrant vim-gtk \
+                 rxvt-unicode-256color scrot slim suckless-tools unp vagrant vim-gtk \
                  virtualenv virtualenvwrapper weechat weechat-plugins \
                  weechat-scripts zfs-dkms zfsutils-linux zsh silversearcher-ag \
                  rofi fonts-font-awesome dunst apt-transport-https \
