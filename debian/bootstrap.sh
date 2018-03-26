@@ -66,6 +66,26 @@ EndSection
 EOF
 )
 
+# https://wiki.manjaro.org/index.php?title=Improve_Font_Rendering
+[[ -d /usr/fonts ]] && (
+cat <<EOF | sudo tee /src/fonts/local.conf
+<match target="font">
+  <edit name="autohint" mode="assign">
+    <bool>true</bool>
+  </edit>
+  <edit name="hinting" mode="assign">
+    <bool>true</bool>
+  </edit>
+  <edit mode="assign" name="hintstyle">
+    <const>hintslight</const>
+  </edit>
+  <edit mode="assign" name="lcdfilter">
+   <const>lcddefault</const>
+ </edit>
+</match>
+EOF
+)
+
 # Configure screen lock on suspend
 [[ -d /etc/systemd/system ]] && (
 cat <<EOF | sudo tee /etc/systemd/system/i3lock.service
