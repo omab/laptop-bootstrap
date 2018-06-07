@@ -150,7 +150,3 @@ sudo ln -sf /usr/bin/google-chrome /usr/local/bin/chrome
 sudo gem install rubocop
 sudo npm install -g eslint babel-eslint eslint-plugin-react
 $APT_GET_INSTALL python-flake8 pylint pylint3
-
-# Install fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
