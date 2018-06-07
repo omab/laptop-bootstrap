@@ -127,10 +127,7 @@ EOF
 )
 
 # install crontab rules
-
-for name in "org psa work default"; do
-    (crontab -l; echo "@reboot emacs --daemon=$name") | crontab -
-done
+(crontab -l; echo "@reboot ~/.bin/start-emacs.sh") | crontab -
 
 # install chrome / virtualbox / docker
 
@@ -153,3 +150,7 @@ sudo ln -sf /usr/bin/google-chrome /usr/local/bin/chrome
 sudo gem install rubocop
 sudo npm install -g eslint babel-eslint eslint-plugin-react
 $APT_GET_INSTALL python-flake8 pylint pylint3
+
+# Install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
