@@ -31,9 +31,10 @@
     };
   };
   boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches"   = 1048576;
-    "fs.inotify.max_user_instances" =    1024;
-    "fs.inotify.max_queued_events"  =   32768;
+    "fs.inotify.max_user_watches" = 1048576;
+    "fs.inotify.max_user_instances" = 1024;
+    "fs.inotify.max_queued_events" = 32768;
+    "vm.max_map_count" = 262144;
   };
 
   # Set networking options
@@ -45,7 +46,19 @@
   networking.networkmanager.enable = true;
   networking.networkmanager.insertNameservers = [ "208.67.222.222" "208.67.220.220" ];
   networking.nameservers = [ "208.67.222.222" "208.67.220.220" ];
-  # Open ports in the firewall.
+  networking.hosts = {
+    "127.0.0.1" = [
+      "app.ml.test"
+      "api.ml.test"
+      "ape.ml.test"
+      "apex.ml.test"
+      "miner.ml.test"
+      "workflow.ml.test"
+      "coref.ml.test"
+      "cce.ml.test"
+      "traefik.ml.test"
+    ];
+  };
   networking.firewall.allowedTCPPorts = [
     22
     80
