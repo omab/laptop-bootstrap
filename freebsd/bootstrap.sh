@@ -25,7 +25,7 @@ $PKG_INSTALL p5-ack arandr aspell en-aspell es-aspell autojump curl emacs \
 	     dunst tmux imagemagick unzip xclip hack-font font-awesome chromium \
 	     ruby rubygem-pry rubygem-rubocop \
 	     python27 python36 py27-ipython py36-ipython py27-flake8 \
-	     py36-flake8 pylint-py27 pylint-py36
+	     py36-flake8 pylint-py27 pylint-py36 uhidd vm-bhyve
 
 # TODO
 # sudo ln -s /usr/bin/nodejs /usr/local/bin/node
