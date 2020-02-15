@@ -9,6 +9,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+      cron
+
       zsh
       autojump
       rxvt_unicode

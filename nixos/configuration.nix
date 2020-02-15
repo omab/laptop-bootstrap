@@ -17,6 +17,9 @@
   # Set boot options
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelParams = [
+    "mem_sleep_default=deep"
+  ];
   boot.loader.grub = {
     enable = true;
     version = 2;
@@ -40,9 +43,9 @@
   # Set networking options
   networking.hostName = "rigel";
   networking.wireless.enable = false;
-  networking.useDHCP = false;  # deprecated
-  networking.interfaces.enp0s20f0u2u4.useDHCP = false;
-  networking.interfaces.wlo1.useDHCP = false;
+  # networking.useDHCP = false;  # deprecated
+  # networking.interfaces.enp0s20f0u2u4.useDHCP = false;
+  # networking.interfaces.wlo1.useDHCP = false;
   networking.networkmanager.enable = true;
   networking.networkmanager.insertNameservers = [ "208.67.222.222" "208.67.220.220" ];
   networking.nameservers = [ "208.67.222.222" "208.67.220.220" ];

@@ -6,6 +6,10 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "overlay2";
 
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+  users.extraGroups.vboxusers.members = [ "omab" ];
+
   environment.systemPackages = with pkgs; [
       wget
       curl
@@ -13,6 +17,9 @@
       unrar
       unzip
       bzip2
+      bc
+
+      vagrant
 
       gcc
       gnumake
@@ -25,6 +32,11 @@
       aspell
       aspellDicts.en
       aspellDicts.es
+      jq
+      fd
+      # editorconfig-checker
+      # editorconfig-core-c
+      shellcheck
       ack
       ripgrep
       silver-searcher
@@ -39,6 +51,12 @@
       python27Packages.ipython
       python38
       python38Packages.ipython
+      ansible
+
+      ruby
+      pry
+
+      libtool
 
       # Python build dependencies for pyenv
       # sqlite
