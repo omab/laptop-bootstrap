@@ -15,12 +15,16 @@
       autojump
       rxvt_unicode
       roxterm
+      file
 
       ly
       rofi
       dconf
+      grim
 
       mpv
+      feh
+      gimp
 
       google-chrome
       slack
