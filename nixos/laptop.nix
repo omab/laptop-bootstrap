@@ -3,6 +3,12 @@
 { config, pkgs, ... }:
 
 {
+  services.fwupd.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    borgbackup
+  ];
+
   hardware = {
     enableRedistributableFirmware = true;
 
@@ -36,4 +42,9 @@
       RuntimeDirectorySize=50%
     '';
   };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+  '';
 }

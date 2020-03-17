@@ -25,6 +25,8 @@
       mpv
       feh
       gimp
+      evince
+      imagemagick
 
       google-chrome
       slack
@@ -61,7 +63,7 @@
 
   programs.dconf.enable = true;
   programs.zsh.enable = true;
-
+  programs.light.enable = true;
   programs.sway = {
     enable = true;
     extraPackages = with pkgs; [
@@ -71,28 +73,25 @@
       waybar
       mako
       kanshi
-      light
-      xorg.xbacklight
       i3status-rust
     ];
   };
 
-  services.xserver.dpi = 96;
-  services.xserver.libinput.enable = true;
+  # services.xserver.dpi = 96;
+  # services.xserver.libinput.enable = true;
   # services.xserver.displayManager.sddm.enable = true;
 
-  services.xserver = {
-    layout = "us";
-    enable = true;
-
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        i3lock
-        i3blocks
-     ];
-    };
-  };
+  # services.xserver = {
+  #   layout = "us";
+  #   enable = true;
+  #   windowManager.i3 = {
+  #     enable = true;
+  #     extraPackages = with pkgs; [
+  #       dmenu
+  #       i3status
+  #       i3lock
+  #       i3blocks
+  #    ];
+  #   };
+  # };
 }

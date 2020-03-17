@@ -18,14 +18,18 @@
       unzip
       bzip2
       bc
+      whois
+      telnet
 
       vagrant
+      google-cloud-sdk
 
       gcc
       gnumake
       cmake
       binutils
       zlib
+      libressl
 
       vim
       emacs
@@ -42,19 +46,28 @@
       silver-searcher
 
       htop
+      iotop
       tmux
 
       git
       docker-compose
+      terraform
 
       python27
       python27Packages.ipython
+      python27Packages.pip
+      python27Packages.setuptools
       python38
       python38Packages.ipython
+      python38Packages.pip
+      python38Packages.setuptools
       ansible
 
       ruby
       pry
+
+      ncat
+      bind
 
       libtool
 

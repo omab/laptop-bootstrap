@@ -47,8 +47,8 @@
   # networking.interfaces.enp0s20f0u2u4.useDHCP = false;
   # networking.interfaces.wlo1.useDHCP = false;
   networking.networkmanager.enable = true;
-  networking.networkmanager.insertNameservers = [ "208.67.222.222" "208.67.220.220" ];
-  networking.nameservers = [ "208.67.222.222" "208.67.220.220" ];
+  # networking.networkmanager.insertNameservers = [ "208.67.222.222" "208.67.220.220" ];
+  # networking.nameservers = [ "208.67.222.222" "208.67.220.220" ];
   networking.hosts = {
     "127.0.0.1" = [
       "app.ml.test"
@@ -60,6 +60,8 @@
       "coref.ml.test"
       "cce.ml.test"
       "traefik.ml.test"
+      "web.ml.test"
+      "wordcloud.ml.test"
     ];
   };
   networking.firewall.allowedTCPPorts = [
