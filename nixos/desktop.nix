@@ -3,6 +3,11 @@
 { config, pkgs, ... }:
 
 {
+  boot.plymouth = {
+    enable = true;
+    theme = "breeze";
+  };
+
   environment.variables = {
     GDK_SCALE = "2";
     GDK_DPI_SCALE = "0.5";
@@ -15,7 +20,10 @@
       autojump
       rxvt_unicode
       roxterm
+      aminal
       file
+      redshift-wlr
+      xdg_utils
 
       ly
       rofi
@@ -56,6 +64,7 @@
       inconsolata
       ubuntu_font_family
       ttf_bitstream_vera
+      starship
     ];
   };
 

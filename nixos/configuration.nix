@@ -50,19 +50,8 @@
   # networking.networkmanager.insertNameservers = [ "208.67.222.222" "208.67.220.220" ];
   # networking.nameservers = [ "208.67.222.222" "208.67.220.220" ];
   networking.hosts = {
-    "127.0.0.1" = [
-      "app.ml.test"
-      "api.ml.test"
-      "ape.ml.test"
-      "apex.ml.test"
-      "miner.ml.test"
-      "workflow.ml.test"
-      "coref.ml.test"
-      "cce.ml.test"
-      "traefik.ml.test"
-      "web.ml.test"
-      "wordcloud.ml.test"
-    ];
+    # "127.0.0.1" = [
+    # ];
   };
   networking.firewall.allowedTCPPorts = [
     22

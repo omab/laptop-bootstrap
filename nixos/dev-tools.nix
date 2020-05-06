@@ -20,6 +20,7 @@
       bc
       whois
       telnet
+      apacheHttpd
 
       vagrant
       google-cloud-sdk
@@ -57,11 +58,24 @@
       python27Packages.ipython
       python27Packages.pip
       python27Packages.setuptools
+      python27Packages.jedi
+      python27Packages.virtualenv
+      python37
+      python37Packages.ipython
+      python37Packages.pip
+      python37Packages.setuptools
+      python37Packages.jedi
+      python37Packages.virtualenv
       python38
       python38Packages.ipython
       python38Packages.pip
       python38Packages.setuptools
+      python38Packages.jedi
+      python38Packages.virtualenv
       ansible
+
+      nodejs
+      yarn
 
       ruby
       pry
@@ -70,6 +84,7 @@
       bind
 
       libtool
+      libvterm
 
       # Python build dependencies for pyenv
       # sqlite

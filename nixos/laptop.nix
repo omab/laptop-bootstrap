@@ -7,6 +7,10 @@
 
   environment.systemPackages = with pkgs; [
     borgbackup
+    pciutils
+    usbutils
+
+    nix-index
   ];
 
   hardware = {
