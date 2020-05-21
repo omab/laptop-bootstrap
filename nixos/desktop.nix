@@ -20,6 +20,7 @@
       autojump
       rxvt_unicode
       roxterm
+      sakura
       aminal
       file
       redshift-wlr
@@ -39,6 +40,8 @@
       google-chrome
       slack
       zoom-us
+
+      libreoffice
   ];
 
   fonts = {

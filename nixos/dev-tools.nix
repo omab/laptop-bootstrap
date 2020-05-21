@@ -21,6 +21,8 @@
       whois
       telnet
       apacheHttpd
+      netcat
+      ipvsadm
 
       vagrant
       google-cloud-sdk
@@ -34,6 +36,7 @@
 
       vim
       emacs
+      emacsPackages.vterm
       aspell
       aspellDicts.en
       aspellDicts.es
