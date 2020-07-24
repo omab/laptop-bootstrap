@@ -33,6 +33,7 @@
       binutils
       zlib
       libressl
+      libyaml
 
       vim
       emacs
@@ -57,25 +58,39 @@
       docker-compose
       terraform
 
+      python-language-server
+
       python27
       python27Packages.ipython
       python27Packages.pip
       python27Packages.setuptools
       python27Packages.jedi
       python27Packages.virtualenv
+      python27Packages.requests
+      # python27Packages.pyls-isort
+      # python27Packages.pyflakes
       python37
       python37Packages.ipython
       python37Packages.pip
       python37Packages.setuptools
       python37Packages.jedi
       python37Packages.virtualenv
+      python37Packages.requests
+      python37Packages.python-language-server
+      python37Packages.pyls-isort
+      python37Packages.pyls-black
+      python37Packages.pyflakes
       python38
       python38Packages.ipython
       python38Packages.pip
       python38Packages.setuptools
       python38Packages.jedi
       python38Packages.virtualenv
-      ansible
+      python38Packages.requests
+      python38Packages.python-language-server
+      python38Packages.pyls-isort
+      python38Packages.pyls-black
+      python38Packages.pyflakes
 
       nodejs
       yarn

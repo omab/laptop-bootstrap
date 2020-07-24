@@ -85,6 +85,7 @@
   users.users.omab = {
     isNormalUser = true;
     shell = pkgs.zsh;
+    description = "Matías Aguirre";
     extraGroups = [
       "wheel"
       "networkmanager"

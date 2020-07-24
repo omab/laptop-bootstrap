@@ -30,6 +30,7 @@
       rofi
       dconf
       grim
+      wl-clipboard
 
       mpv
       feh
@@ -89,6 +90,14 @@
     ];
   };
 
+  services.xserver = {
+    layout = "us";
+    enable = true;
+  };
+
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome3.enable = true;
+
   # services.xserver.dpi = 96;
   # services.xserver.libinput.enable = true;
   # services.xserver.displayManager.sddm.enable = true;
@@ -103,6 +112,7 @@
   #       i3status
   #       i3lock
   #       i3blocks
+  #       xorg.xmodmap
   #    ];
   #   };
   # };
