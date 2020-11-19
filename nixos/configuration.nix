@@ -15,10 +15,12 @@
   ];
 
   # Set boot options
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [
     "mem_sleep_default=deep"
+    "usbcore.use_both_schemes=y"
   ];
   boot.loader.grub = {
     enable = true;
@@ -29,7 +31,7 @@
   };
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/1686d11f-d6c8-4618-a2de-1ce6b34a4695";
+      device = "/dev/disk/by-uuid/ad901417-b46e-4c0d-889d-0c9fddf0c787";
       preLVM = true;
     };
   };
@@ -50,12 +52,26 @@
   # networking.networkmanager.insertNameservers = [ "208.67.222.222" "208.67.220.220" ];
   # networking.nameservers = [ "208.67.222.222" "208.67.220.220" ];
   networking.hosts = {
-    # "127.0.0.1" = [
-    # ];
+    "127.0.0.1" = [
+    ];
+    "192.168.1.104" = [
+      "aldebaran"
+      "aldebaran.lan"
+    ];
   };
   networking.firewall.allowedTCPPorts = [
     22
     80
+    # docker swarm ports
+    2377
+    7946
+    4789
+  ];
+  # docker swarm ports
+  networking.firewall.allowedUDPPorts = [
+    2377
+    7946
+    4789
   ];
 
   # Set i18n properties.
@@ -92,8 +108,15 @@
       "docker"
       "audio"
       "video"
+      "kvm"
+      "libvirtd"
+      "qemu-libvirtd"
     ];
   };
+
+  nix.allowedUsers = [
+    "omab"
+  ];
 
   system.stateVersion = "20.03";
 }

@@ -17,14 +17,22 @@
       cron
 
       zsh
+      starship
       autojump
       rxvt_unicode
       roxterm
       sakura
       aminal
       file
+      wf-recorder
       redshift-wlr
+      v4l-utils
+      linuxPackages_5_9.v4l2loopback
       xdg_utils
+      xdg-desktop-portal
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+      home-manager
 
       ly
       rofi
@@ -39,6 +47,7 @@
       imagemagick
 
       google-chrome
+      firefox
       slack
       zoom-us
 
@@ -57,7 +66,7 @@
       fira
       fira-code
       fira-mono
-
+      font-awesome
       iosevka
       hack-font
       terminus_font
