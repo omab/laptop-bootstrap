@@ -1,5 +1,3 @@
-# vim: set ft=conf:
-
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -9,29 +7,34 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./laptop.nix
-    ./dev-tools.nix
-    ./desktop.nix
   ];
 
-  # Set boot options
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  ############################################################################
+  # Boot & Kernel
+
+  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.grub = {
+  #   enable = true;
+  #   version = 2;
+  #   device = "nodev";
+  #   efiSupport = true;
+  #   enableCryptodisk = true;
+  #   canTouchEfiVariables = true;
+  # };
+  boot.plymouth = {
+    enable = true;
+    theme = "breeze";
+  };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
     "mem_sleep_default=deep"
     "usbcore.use_both_schemes=y"
   ];
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    device = "nodev";
-    efiSupport = true;
-    enableCryptodisk = true;
-  };
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/ad901417-b46e-4c0d-889d-0c9fddf0c787";
+      device = "/dev/disk/by-uuid/13e13116-58f0-46f2-994b-856a900c5428";
       preLVM = true;
     };
   };
@@ -41,40 +44,107 @@
     "fs.inotify.max_queued_events" = 32768;
     "vm.max_map_count" = 262144;
   };
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.v4l2loopback
+  ];
+  boot.kernelModules = [
+    "v4l2loopback"
+  ];
 
-  # Set networking options
+  boot.extraModprobeConfig = ''
+    options v4l2loopback exclusive_caps=1 video_nr=9 card_label=a7III
+  '';
+
+  fileSystems."/".options = [
+    "noatime"
+    "nodiratime"
+    "discard"
+  ];
+
+  ############################################################################
+  # Networking
+  
   networking.hostName = "rigel";
   networking.wireless.enable = false;
-  # networking.useDHCP = false;  # deprecated
-  # networking.interfaces.enp0s20f0u2u4.useDHCP = false;
-  # networking.interfaces.wlo1.useDHCP = false;
   networking.networkmanager.enable = true;
-  # networking.networkmanager.insertNameservers = [ "208.67.222.222" "208.67.220.220" ];
-  # networking.nameservers = [ "208.67.222.222" "208.67.220.220" ];
+
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
+  networking.useDHCP = false;
+  networking.interfaces.wlo1.useDHCP = false;
+
   networking.hosts = {
     "127.0.0.1" = [
+      "ml.test"
+      "app.ml.test"
+      "webhooks.ml.test"
+      "api.ml.test"
+      "workflow.ml.test"
+      "wordcloud.ml.test"
+      "analytics.ml.test"
+      "statics.ml.test"
+      "wfi.ml.test"
+      "es.ml.test"
+
+      "trucouy.test"
+      "app.trucouy.test"
+      "api.trucouy.test"
+
+      "meridiana.uy"
+      "local.meridiana.uy"
+      "local.yourstarrymap.com"
+      "local.diccionario.com"
+
+      "local.neutralauth.com"
     ];
-    "192.168.1.104" = [
+    "10.0.0.10" = [
       "aldebaran"
       "aldebaran.lan"
+      "aldebaran.home.lan"
+    ];
+    "10.0.0.37" = [
+      "canon"
+      "canon.lan"
+      "canon.home.lan"
+      "pinter"
+      "pinter.lan"
+      "pinter.home.lan"
+    ];
+    "34.95.91.82" = [
+      "demo-testing.monkeylearn.com"
+    ];
+    "34.96.115.98" = [
+      "api.monkeylearn.io"
+      "app.monkeylearn.io"
     ];
   };
+
   networking.firewall.allowedTCPPorts = [
     22
     80
     # docker swarm ports
-    2377
-    7946
-    4789
-  ];
-  # docker swarm ports
-  networking.firewall.allowedUDPPorts = [
-    2377
-    7946
-    4789
+    # 2377
+    # 7946
+    # 4789
   ];
 
-  # Set i18n properties.
+  # docker swarm ports
+  networking.firewall.allowedUDPPorts = [
+    # 2377
+    # 7946
+    # 4789
+  ];
+
+  ############################################################################
+  # Nix & Nixpkgs
+
+  nixpkgs.config.allowBroken = true;
+  nixpkgs.config.allowUnfree = true;
+
+  ############################################################################
+  # Environment
+
   console = {
     font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
     keyMap = "us";
@@ -87,15 +157,318 @@
   # Set your time zone.
   time.timeZone = "America/Montevideo";
 
-  # Allow non-free packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.upower.enable = true;
+  # Sound
+  sound.enable = true;
 
   # Global environment setup
   environment.pathsToLink = [ "/libexec" ];
+
+  environment.variables = {
+    GDK_SCALE = "1";
+    # GDK_DPI_SCALE = "0.5";
+    GDK_DPI_SCALE = "1";
+  };
+
+  fonts = {
+    fontconfig.enable = true;
+    enableGhostscriptFonts = true;
+    # when upgrading, change to fontDir = { enable = true; };
+    enableFontDir = true;
+    fonts = with pkgs; [
+      emojione
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      fira
+      fira-code
+      fira-mono
+      font-awesome
+      iosevka
+      hack-font
+      terminus_font
+      anonymousPro
+      freefont_ttf
+      corefonts
+      dejavu_fonts
+      inconsolata
+      ubuntu_font_family
+      ttf_bitstream_vera
+      starship
+    ];
+  };
+
+  hardware = {
+    enableRedistributableFirmware = true;
+
+    cpu.intel.updateMicrocode = true;
+    cpu.amd.updateMicrocode = false;
+
+    bluetooth.enable = true;
+    facetimehd.enable = true;
+
+    opengl.enable = true;
+    opengl.driSupport32Bit = true;
+    opengl.extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      libvdpau-va-gl
+      vaapiVdpau
+    ];
+    opengl.extraPackages32 = with pkgs.pkgsi686Linux; [
+       vaapiIntel
+       libvdpau-va-gl
+       vaapiVdpau
+    ];
+
+    pulseaudio.enable = true;
+    pulseaudio.package = pkgs.pulseaudioFull;
+    pulseaudio.support32Bit = true;
+    pulseaudio.daemon.config = {
+      flat-volumes = "no";
+    };
+  };
+
+  ############################################################################
+  # Services
+
+  services.openssh.enable = true;
+  services.upower.enable = true;
+  services.fwupd.enable = true;
+
+  # X11
+  services.xserver = {
+    enable = true;
+    # videoDrivers = [ "displaylink" "modesetting" ];
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
+
+    layout = "us";
+    # xkbOptions = "eurosign:e";
+    libinput = {
+      enable = true;
+    };
+
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+        dmenu
+        i3status
+        i3lock
+        i3blocks
+      ];
+    };
+  };
+
+  # Enable CUPS to print documents.
+  # services.printing.enable = true;
+
+  # Bluetooth
+  services.blueman.enable = true;
+
+  # services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
+  # services.dbus.packages = [ pkgs.gnome3.dconf ];
+
+  # Configure lid changes actions
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchDocked = "suspend";
+    lidSwitchExternalPower = "suspend";
+    extraConfig = ''
+      HandlePowerKey=suspend
+      KillUserProcess=no
+      RuntimeDirectorySize=50%
+    '';
+  };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+    ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+    ACTION=="add", SUBSYSTEM=="thunderbolt", ATTRS{iommu_dma_protection}=="1", ATTR{authorized}=="0", ATTR{authorized}="1"
+  '';
+
+  ############################################################################
+  # Programs
+  
+  programs.dconf.enable = true;
+  programs.zsh.enable = true;
+  programs.light.enable = true;
+  # programs.adb.enable = true;
+
+  programs.sway = {
+    enable = true;
+    extraPackages = with pkgs; [
+      swaylock
+      swaylock-fancy
+      swayidle
+      xwayland
+      waybar
+      mako
+      kanshi
+      i3status-rust
+    ];
+  };
+
+  ############################################################################
+  # Virtualization
+
+  virtualisation.docker.enable = true;
+  virtualisation.docker.storageDriver = "overlay2";
+  virtualisation.docker.liveRestore = false;
+  virtualisation.libvirtd.enable = true;
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
+
+  ############################################################################
+  # Packages
+
+  environment.systemPackages = with pkgs; [
+    wget
+    curl
+    unp
+    unrar
+    unzip
+    zip
+    bzip2
+    bc
+    whois
+    telnet
+    apacheHttpd
+    netcat
+    ipvsadm
+
+    virt-manager
+    google-cloud-sdk
+    heroku
+
+    gcc
+    gnumake
+    cmake
+    binutils
+    zlib
+    libressl
+    libyaml
+    postgresql
+
+    nixfmt
+    vim
+    ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
+      epkgs.vterm
+    ]))
+    aspell
+    aspellDicts.en
+    aspellDicts.es
+    jq
+    fd
+    editorconfig-core-c
+    shellcheck
+    ack
+    ripgrep
+    silver-searcher
+
+    htop
+    iotop
+    tmux
+
+    git
+    gitAndTools.gh
+    docker-compose
+    terraform
+    pipenv
+    csslint
+    multimarkdown
+    timetrap
+
+    perl
+
+    (python38.withPackages (pypkgs: [
+      pypkgs.ipython
+      pypkgs.pip
+      pypkgs.setuptools
+      pypkgs.jedi
+      pypkgs.virtualenv
+      pypkgs.requests
+      pypkgs.python-language-server
+      pypkgs.pyls-isort
+      pypkgs.pyls-black
+      pypkgs.pyflakes
+      pypkgs.isort
+      pypkgs.nose
+      pypkgs.pytest
+      pypkgs.jsbeautifier
+    ]))
+
+    nodejs
+    yarn
+
+    ruby
+    pry
+
+    ncat
+    bind
+
+    libtool
+    libvterm
+
+    borgbackup
+    pciutils
+    usbutils
+    dmidecode
+    lshw
+    thunderbolt
+    nix-index
+    linuxPackages.evdi
+
+    cron
+
+    zsh
+    starship
+    autojump
+    sakura
+    file
+    wf-recorder
+    redshift-wlr
+    v4l-utils
+    libv4l
+    linuxPackages.v4l2loopback
+    xdg_utils
+    pipewire
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-wlr
+    pavucontrol
+    libappindicator
+    libappindicator-gtk3
+    breeze-icons
+    breeze-gtk
+    gnome-breeze
+    capitaine-cursors
+
+    rofi
+    dconf
+    grim
+    slurp
+    wl-clipboard
+
+    mpv
+    feh
+    gimp
+    inkscape
+    evince
+    imagemagick
+
+    (chromium.override { enableWideVine = true; })
+    firefox
+    slack
+    zoom-us
+
+    # cups
+    libreoffice
+  ];
+
+  ############################################################################
+  # User account
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.omab = {
@@ -111,6 +484,11 @@
       "kvm"
       "libvirtd"
       "qemu-libvirtd"
+      "vboxusers"
+      "disk"
+      "messagebus"
+      # "vboxusers"
+      # "adbusers"
     ];
   };
 
@@ -118,5 +496,13 @@
     "omab"
   ];
 
-  system.stateVersion = "20.03";
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "20.09"; # Did you read the comment?
 }
+
+# vim: set ft=conf:
