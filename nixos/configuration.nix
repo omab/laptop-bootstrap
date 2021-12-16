@@ -86,6 +86,7 @@
       "statics.ml.test"
       "wfi.ml.test"
       "es.ml.test"
+      "etl.ml.test"
 
       "trucouy.test"
       "app.trucouy.test"
@@ -111,26 +112,29 @@
       "pinter.lan"
       "pinter.home.lan"
     ];
-    "34.95.91.82" = [
-      "demo-testing.monkeylearn.com"
-    ];
-    "34.96.115.98" = [
-      "api.monkeylearn.io"
-      "app.monkeylearn.io"
-    ];
   };
 
+  networking.firewall.checkReversePath = "loose";
+  networking.wireguard.enable = true;
+
   networking.firewall.allowedTCPPorts = [
-    22
-    80
-    # docker swarm ports
+    # 8000
+    # 51820
+    # 22
+    # 80
+    # # barrier
+    # 24800
+    # # docker swarm ports
     # 2377
     # 7946
     # 4789
+    # # psql
+    # 5432
   ];
 
   # docker swarm ports
   networking.firewall.allowedUDPPorts = [
+    # 51820
     # 2377
     # 7946
     # 4789
@@ -172,8 +176,9 @@
   fonts = {
     fontconfig.enable = true;
     enableGhostscriptFonts = true;
-    # when upgrading, change to fontDir = { enable = true; };
-    enableFontDir = true;
+    fontDir = {
+      enable = true;
+    };
     fonts = with pkgs; [
       emojione
       noto-fonts
@@ -234,11 +239,15 @@
   services.openssh.enable = true;
   services.upower.enable = true;
   services.fwupd.enable = true;
+  services.mullvad-vpn.enable = false;
+  services.pipewire.enable = true;
+  services.tlp.enable = true;
 
   # X11
   services.xserver = {
     enable = true;
     # videoDrivers = [ "displaylink" "modesetting" ];
+    videoDrivers = [ "modesetting" ];
     displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
 
@@ -265,6 +274,7 @@
 
   # Bluetooth
   services.blueman.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   # services.udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
   # services.dbus.packages = [ pkgs.gnome3.dconf ];
@@ -286,6 +296,7 @@
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
     ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
     ACTION=="add", SUBSYSTEM=="thunderbolt", ATTRS{iommu_dma_protection}=="1", ATTR{authorized}=="0", ATTR{authorized}="1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8153", TEST=="power/control", ATTR{power/control}="on"
   '';
 
   ############################################################################
@@ -295,6 +306,8 @@
   programs.zsh.enable = true;
   programs.light.enable = true;
   # programs.adb.enable = true;
+
+  xdg.portal.wlr.enable = true;
 
   programs.sway = {
     enable = true;
@@ -350,15 +363,23 @@
     libressl
     libyaml
     postgresql
+    autoconf
+    automake
+    nasm
+    mozjpeg
 
     nixfmt
     vim
     ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
       epkgs.vterm
     ]))
+    vscode
     aspell
     aspellDicts.en
     aspellDicts.es
+    hunspell
+    hunspellDicts.en-us
+    hunspellDicts.es-uy
     jq
     fd
     editorconfig-core-c
@@ -370,6 +391,11 @@
     htop
     iotop
     tmux
+    powertop
+    wezterm
+    foot
+
+    mullvad-vpn
 
     git
     gitAndTools.gh
@@ -379,24 +405,27 @@
     csslint
     multimarkdown
     timetrap
+    vagrant
 
     perl
 
-    (python38.withPackages (pypkgs: [
+    (python39.withPackages (pypkgs: [
       pypkgs.ipython
       pypkgs.pip
       pypkgs.setuptools
       pypkgs.jedi
       pypkgs.virtualenv
       pypkgs.requests
-      pypkgs.python-language-server
-      pypkgs.pyls-isort
-      pypkgs.pyls-black
+      # pypkgs.python-language-server
+      # pypkgs.pyls-isort
+      # pypkgs.pyls-black
       pypkgs.pyflakes
       pypkgs.isort
       pypkgs.nose
       pypkgs.pytest
       pypkgs.jsbeautifier
+      pypkgs.sqlparse
+      pypkgs.pygments
     ]))
 
     nodejs
@@ -419,6 +448,7 @@
     thunderbolt
     nix-index
     linuxPackages.evdi
+    tlp
 
     cron
 
@@ -426,6 +456,7 @@
     starship
     autojump
     sakura
+    alacritty
     file
     wf-recorder
     redshift-wlr
@@ -444,6 +475,7 @@
     breeze-gtk
     gnome-breeze
     capitaine-cursors
+    xorg.xmodmap
 
     rofi
     dconf
@@ -457,11 +489,15 @@
     inkscape
     evince
     imagemagick
+    optipng
+    jpegoptim
 
     (chromium.override { enableWideVine = true; })
     firefox
     slack
     zoom-us
+    skypeforlinux
+    barrier
 
     # cups
     libreoffice
