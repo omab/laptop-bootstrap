@@ -63,7 +63,7 @@
 
   ############################################################################
   # Networking
-  
+
   networking.hostName = "rigel";
   networking.wireless.enable = false;
   networking.networkmanager.enable = true;
@@ -76,41 +76,6 @@
 
   networking.hosts = {
     "127.0.0.1" = [
-      "ml.test"
-      "app.ml.test"
-      "webhooks.ml.test"
-      "api.ml.test"
-      "workflow.ml.test"
-      "wordcloud.ml.test"
-      "analytics.ml.test"
-      "statics.ml.test"
-      "wfi.ml.test"
-      "es.ml.test"
-      "etl.ml.test"
-
-      "trucouy.test"
-      "app.trucouy.test"
-      "api.trucouy.test"
-
-      "meridiana.uy"
-      "local.meridiana.uy"
-      "local.yourstarrymap.com"
-      "local.diccionario.com"
-
-      "local.neutralauth.com"
-    ];
-    "10.0.0.10" = [
-      "aldebaran"
-      "aldebaran.lan"
-      "aldebaran.home.lan"
-    ];
-    "10.0.0.37" = [
-      "canon"
-      "canon.lan"
-      "canon.home.lan"
-      "pinter"
-      "pinter.lan"
-      "pinter.home.lan"
     ];
   };
 
@@ -199,6 +164,7 @@
       ubuntu_font_family
       ttf_bitstream_vera
       starship
+      nerdfonts
     ];
   };
 
@@ -208,8 +174,14 @@
     cpu.intel.updateMicrocode = true;
     cpu.amd.updateMicrocode = false;
 
-    bluetooth.enable = true;
     facetimehd.enable = true;
+
+    bluetooth.enable = true;
+    bluetooth.settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
+    };
 
     opengl.enable = true;
     opengl.driSupport32Bit = true;
@@ -301,7 +273,7 @@
 
   ############################################################################
   # Programs
-  
+
   programs.dconf.enable = true;
   programs.zsh.enable = true;
   programs.light.enable = true;
@@ -319,6 +291,7 @@
       waybar
       mako
       kanshi
+      wofi
       i3status-rust
     ];
   };
@@ -350,6 +323,7 @@
     apacheHttpd
     netcat
     ipvsadm
+    wirelesstools
 
     virt-manager
     google-cloud-sdk
@@ -436,6 +410,7 @@
 
     ncat
     bind
+    iperf3
 
     libtool
     libvterm
